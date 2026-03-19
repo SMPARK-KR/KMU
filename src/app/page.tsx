@@ -1,7 +1,9 @@
 import { getServerSession } from "next-auth/next";
+export const dynamic = "force-dynamic";
 import { signIn } from "next-auth/react";
 import Dashboard from "@/components/Dashboard";
 import { fetchAirQualityData } from "@/lib/airkorea";
+import { LogoutBtn } from "./LogoutBtn";
 import Link from "next/link";
 import "./globals.css";
 
@@ -28,15 +30,21 @@ export default async function Home() {
     <main>
       <div style={{ padding: '1rem 2rem', display: 'flex', justifyContent: 'flex-end', gap: '1rem', alignItems: 'center' }}>
         <span style={{ fontSize: '0.875rem', color: '#666' }}>
-          환영합니다, {session.user?.name}님
+          환영합니다, {session.user?.name || session.user?.email}님
         </span>
-        {/* Replaced <a> tag with Link components */}
         <Link 
           href="/guestbook" 
           style={{ padding: '0.75rem 1.5rem', background: '#0070f3', color: 'white', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold' }}
         >
           방명록 가기
         </Link>
+        <Link 
+          href="/youtube" 
+          style={{ padding: '0.75rem 1.5rem', background: '#e11d48', color: 'white', borderRadius: '4px', textDecoration: 'none', fontWeight: 'bold' }}
+        >
+          📺 유튜브 AI 분석
+        </Link>
+        <LogoutBtn />
       </div>
       <Dashboard data={data as any} />
     </main>
